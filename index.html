@@ -7,33 +7,95 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Prueba WebSocket</h1>
     <div id="app">
-        <h3 id="titulo1"></h3>
-        <p id="mensajeEnviado"></p>
-        <h3 id="titulo2"></h3>
-        <p id="mensaje"></p>
+        <h1 class="principalTittle">Prueba WebSocket</h1>
+      <div class="mensajes">
+      </div>
+      <div class="mensajes">
+        <div class="mensaje">
+          <h3 id="titulo1"></h3>
+          <p id="mensajeEnviado"></p>
+        </div>
+        <div class="mensaje">
+          <h3 id="titulo2"></h3>
+          <p id="mensaje"></p>
+        </div>
+      </div>
     </div>
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #app {
+        width: 90vw;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .mensajes {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        overflow: auto;
+      }
+      .mensaje {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 10px;
+      }
+      #titulo1 {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      #titulo2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      #mensajeEnviado {
+        font-size: 1.5em;
+      }
+      #mensaje {
+        font-size: 1.5em;
+      }
+      .principalTittle {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 2rem;
+        margin-bottom: 4rem;
+        border-bottom: 0.05rem solid #000;
+      }
+    </style>
+
     <script type="text/javascript">
-        const tituloEnviado = document.querySelector('#titulo1')
-        const titulo = document.querySelector('#titulo2')
-        const parrafoEnviado = document.querySelector('#mensajeEnviado');
-        const parrafo = document.querySelector('#mensaje');
-      let socket = new WebSocket(
-        "ws://127.0.0.1:7000/Echo"
-      );
+      const tituloEnviado = document.querySelector("#titulo1");
+      const titulo = document.querySelector("#titulo2");
+      const parrafoEnviado = document.querySelector("#mensajeEnviado");
+      const parrafo = document.querySelector("#mensaje");
+      let socket = new WebSocket("ws://127.0.0.1:7000/Echo");
 
       socket.onopen = function (e) {
-        const mensaje = "Esta es una prueba de conexión."
+        const mensaje = "Esta es una prueba de conexión.";
         alert("Conexión establecida");
-        tituloEnviado.innerHTML = `Datos enviados`
-        titulo.innerHTML = `Datos retornados del servidor: `
-        parrafoEnviado.innerHTML = `Enviando el mensaje: ${mensaje}`
+        tituloEnviado.innerHTML = `Datos enviados`;
+        titulo.innerHTML = `Datos retornados del servidor: `;
+        parrafoEnviado.innerHTML = `${mensaje}`;
         socket.send(mensaje);
       };
 
       socket.onmessage = function (event) {
-        parrafo.innerHTML = `${event.data}`
+        parrafo.innerHTML = `${event.data}`;
       };
 
       socket.onclose = function (event) {
@@ -44,13 +106,13 @@
         } else {
           // ej. El proceso del servidor se detuvo o la red está caída
           // event.code es usualmente 1006 en este caso
-            //alert("La conexión se cayó");
+          //alert("La conexión se cayó");
         }
       };
 
       socket.onerror = function (error) {
         alert(`No es posible conectar con el webSocket.`);
-        parrafoEnviado.innerHTML = `No es posible conectar con el webSocket.`
+        parrafoEnviado.innerHTML = `No es posible conectar con el webSocket.`;
       };
     </script>
   </body>
